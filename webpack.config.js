@@ -7,24 +7,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-// function generateHtmlPlugins(templateDir) {
-//   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
-//   return templateFiles.map(item => {
-//     const parts = item.split(".");
-//     const name = parts[0];
-//     const extension = parts[1];
-//     return new HtmlWebpackPlugin({
-//       filename: `${name}.html`,
-//       template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-//       minify: {
-//         collapseWhitespace: true
-//       }
-//     });
-//   });
-// }
-
-// const htmlPlugins = generateHtmlPlugins("./src/html/views");
-
 const config = {
   entry: ["./src/js/main.js", "./src/js/styles.js", "./src/scss/main.scss"],
   output: {
