@@ -53,7 +53,7 @@ hr {
   height: 100vh;
   min-height: 820px;
 
-  background: url('../images/BG.png') center no-repeat;
+  background: url('/images/BG.png') center no-repeat;
   background-size: cover;
 
   position: relative;
@@ -347,7 +347,7 @@ hr {
 }
 
 .section--devices {
-  background: url('../images/devices-bg.png') center no-repeat;
+  background: url('/images/devices-bg.png') center no-repeat;
   background-size: cover;
   padding-bottom: 0;
   margin-bottom: 40px;
@@ -358,13 +358,13 @@ hr {
 }
 
 .section--clients {
-  background: url('../images/clients_bg.png') center no-repeat;
+  background: url('/images/clients_bg.png') center no-repeat;
   background-size: cover;
 }
 
 .section--map {
   padding: 40px 0;
-  background: url('../images/map-bg.png') center no-repeat;
+  background: url('/images/map-bg.png') center no-repeat;
   background-size: cover;
 }
 

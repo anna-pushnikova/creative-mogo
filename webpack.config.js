@@ -1,27 +1,29 @@
 const webpack = require("webpack");
 const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-function generateHtmlPlugins(templateDir) {
-  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
-  return templateFiles.map(item => {
-    const parts = item.split(".");
-    const name = parts[0];
-    const extension = parts[1];
-    return new HtmlWebpackPlugin({
-      filename: `${name}.html`,
-      template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-      inject: false
-    });
-  });
-}
+// function generateHtmlPlugins(templateDir) {
+//   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+//   return templateFiles.map(item => {
+//     const parts = item.split(".");
+//     const name = parts[0];
+//     const extension = parts[1];
+//     return new HtmlWebpackPlugin({
+//       filename: `${name}.html`,
+//       template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
+//       minify: {
+//         collapseWhitespace: true
+//       }
+//     });
+//   });
+// }
 
-const htmlPlugins = generateHtmlPlugins("./src/html/views");
+// const htmlPlugins = generateHtmlPlugins("./src/html/views");
 
 const config = {
   entry: ["./src/js/main.js", "./src/js/styles.js", "./src/scss/main.scss"],
@@ -82,19 +84,6 @@ const config = {
             }
           }
         ]
-      },
-      {
-        test: /\.html$/,
-        include: path.resolve(__dirname, "src/html/includes"),
-        use: ["raw-loader"]
-      },
-      { 
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
-        loader: "url-loader?limit=10000&mimetype=application/font-woff" 
-      },
-      { 
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
-        loader: "file-loader" 
       }
     ]
   },
@@ -120,8 +109,15 @@ const config = {
         from: "./src/assets/images",
         to: "./images"
       }
-    ])
-  ].concat(htmlPlugins)
+    ]),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template : path.join(__dirname, './src/html/views/index.html'),
+      minify: {
+        collapseWhitespace: true
+      }
+    })
+  ]
 };
 
 module.exports = (env, argv) => {
