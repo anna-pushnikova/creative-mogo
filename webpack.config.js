@@ -1,11 +1,30 @@
 const webpack = require("webpack");
 const path = require("path");
-// const fs = require("fs");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const fs = require('fs')
+
+function generateHtmlPlugins(templateDir) {
+  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+  return templateFiles.map(item => {
+    const parts = item.split('.');
+    const name = parts[0];
+    const extension = parts[1];
+    return new HtmlWebpackPlugin({
+      filename: `${name}.html`,
+      template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
+      minify: {
+        collapseWhitespace: true
+      }
+    })
+  })
+}
+
+const htmlPlugins = generateHtmlPlugins('./src/html/views');
+
 
 const config = {
   entry: ["./src/js/main.js", "./src/js/styles.js", "./src/scss/main.scss"],
@@ -30,8 +49,7 @@ const config = {
         include: path.resolve(__dirname, "src/scss"),
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {}
+            loader: MiniCssExtractPlugin.loader
           },
           {
             loader: "css-loader",
@@ -91,15 +109,8 @@ const config = {
         from: "./src/assets/images",
         to: "./images"
       }
-    ]),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template : path.join(__dirname, './src/html/views/index.html'),
-      minify: {
-        collapseWhitespace: true
-      }
-    })
-  ]
+    ])
+  ].concat(htmlPlugins)
 };
 
 module.exports = (env, argv) => {

@@ -2,6 +2,8 @@ import $ from 'jquery';
 window.$ = window.jQuery = $;
 import 'slick-carousel';
 
+/* Show content */
+
 $(function() {
   let header = $("#header"),
       introHeight = $("#intro").innerHeight(),
@@ -78,8 +80,10 @@ $(function() {
     slidesToShow: 1,
     slidesToScroll: 1
   })
-
-
-
 });
 
+
+$(window).on('load', function() {
+  $('#content').show()
+  $('#preloader').hide()
+})
